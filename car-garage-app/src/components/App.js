@@ -1,95 +1,142 @@
-import React, { useState, useEffect } from "react";
-import './App.css';
-import Header from './Header';
-import AddCar from './AddCar';
+import React from "react";
 import CarList from './CarList';
-//import AddMechanic from './AddMechanic';
+import CarCard from "./CarCard";
 
-function App() 
+class AddCar extends React.Component
 {
-  const { v4: uuid } = require("uuid");
-  
-  const LOCAL_STORAGE_CARS_KEY = "cars";
-  const LOCAL_STORAGE_MECHANICS_KEY = "mechanics";
+    state={
+        make:"",
+        model:"",
+        year:"",
+        color:"",
+        plateNumber:"",
+        issue:""
 
-  const [cars, setCars] = useState(() => {
-    const storedCars = localStorage.getItem(LOCAL_STORAGE_CARS_KEY);
-    return storedCars ? JSON.parse(storedCars) : [];
-  });
+    };
 
-  const [mechanics/*, setMechanics*/] = useState(() => {
-    const storedMechanics = localStorage.getItem(LOCAL_STORAGE_MECHANICS_KEY);
-    return storedMechanics ? JSON.parse(storedMechanics) : [];
-  });
+    componentDidUpdate(prevProps) {
+    if (prevProps.currentCar !== this.props.currentCar && this.props.currentCar) {
+      this.setState({ ...this.props.currentCar });
+    }
+  }
 
-  const [currentCar, setCurrentCar] = useState(null);
-  //const [currentMechanic, setCurrentMechanic] = useState(null);
+  handleSubmit = (e) => {
+    e.preventDefault();
+    if (!this.state.make || !this.state.model || !this.state.plateNumber) {
+      alert("Make, Model, and Plate Number are mandatory!");
+      return;
+    }
 
-  // CRUD for Car
-  const addCarHandler =(car)=>
-  {
-    setCars([...cars, {id: uuid(),...car}]);
+    if (this.props.currentCar) {
+      this.props.editCarHandler(this.state);
+    } else {
+      this.props.addCarHandler(this.state);
+    }
+
+    this.setState({
+      make: "",
+      model: "",
+      colour: "",
+      year: "",
+      plateNumber: "",
+      fault: ""
+    });
   };
 
-  const deleteCarHandler =(id)=>
-  {
-    const newCarList = cars.filter((car) => car.id !==id);
-    setCars(newCarList);
-  }
 
-  const editCarHandler =(car)=>
-  {
-    setCars();
-  }
-
-  //CRUD for Mechanic
-
-  // Local Storage
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_CARS_KEY, JSON.stringify(cars));
-  }, [cars]);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_MECHANICS_KEY, JSON.stringify(mechanics));
-  }, [mechanics]);
-
-  return (
-    <div className='ui container'>
-      <Header />
-      <div className="ui two column grid">
-        <div className="column">
-          <AddCar 
-            addCarHandler={addCarHandler}
-            editCarHandler={editCarHandler}
-            currentCar={currentCar}
-            setCurrentCar={setCurrentCar}
-          />
-          <CarList 
-            cars={cars} 
-            deleteCarHandler={deleteCarHandler}
-            setCurrentCar={setCurrentCar}
-          />
+    render() 
+    {
+        return (
+        <div className="ui main">
+            <h2>{this.props.currentCar ? "Edit Car" : "Add Car"}</h2>
+            <form className="ui form" onSubmit={this.handleSubmit}>
+                <div className="field">
+                    <label>Make</label>
+                    <input
+                    type="text"
+                    name="make"
+                    placeholder="Make"
+                    value={this.state.make}
+                    onChange={(e) => this.setState({ make: e.target.value })}
+                    />
+                </div>
+                <div className="field">
+                    <label>Model</label>
+                    <input
+                    type="text"
+                    name="model"
+                    placeholder="Model"
+                    value={this.state.model}
+                    onChange={(e) => this.setState({ model: e.target.value })}
+                    />
+                </div>
+                <div className="field">
+                    <label>Colour</label>
+                    <input
+                    type="text"
+                    name="colour"
+                    placeholder="Colour"
+                    value={this.state.colour}
+                    onChange={(e) => this.setState({ colour: e.target.value })}
+                    />
+                </div>
+                <div className="field">
+                    <label>Year</label>
+                    <input
+                    type="text"
+                    name="year"
+                    placeholder="Year"
+                    value={this.state.year}
+                    onChange={(e) => this.setState({ year: e.target.value })}
+                    />
+                </div>
+                <div className="field">
+                    <label>Plate Number</label>
+                    <input
+                    type="text"
+                    name="plateNumber"
+                    placeholder="Plate Number"
+                    value={this.state.plateNumber}
+                    onChange={(e) => this.setState({ plateNumber: e.target.value })}
+                    />
+                </div>
+                <div className="field">
+                    <label>Fault</label>
+                    <input
+                    type="text"
+                    name="fault"
+                    placeholder="Fault"
+                    value={this.state.fault}
+                    onChange={(e) => this.setState({ fault: e.target.value })}
+                    />
+                </div>
+            <button className="ui button blue" type="submit">
+                {this.props.currentCar ? "Update" : "Add"}
+            </button>
+            {this.props.currentCar && (
+                <button 
+                className="ui button red"
+                type="button"
+                onClick={() => {
+                    this.props.setCurrentCar(null);
+                    this.setState({
+                    make: "",
+                    model: "",
+                    colour: "",
+                    year: "",
+                    plateNumber: "",
+                    fault: ""
+                    });
+                }}
+                >
+                Cancel
+                </button>
+            )}
+            </form>
         </div>
+        );
+    }
 
-        {/*Mechanic Options
-        <div className="column">
-          <AddMechanic
-            addMechanicHandler={addMechanicHandler}
-            editMechanicHandler={editMechanicHandler}
-            currentMechanic={currentMechanic}
-            setCurrentMechanic={setCurrentMechanic}
-          />
-          <MechanicList
-            mechanics={mechanics}
-            deleteMechanicHandler={deleteMechanicHandler}
-            setCurrentMechanic={setCurrentMechanic}
-          />
-        </div>
-        */}
-      </div>
-    </div>
-  );
-  
 }
 
-export default App;
+export default AddCar;
