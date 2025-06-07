@@ -6,7 +6,7 @@ const CarCard = ({ car, deleteCarHandler, editHandler }) => {
     
     return (
         <div className="item">
-            <img className="ui avatar image" src={carImage} alt="car" />
+            <img className="ui avatar image" src={carImage} alt="car" width={300}/>
             <div className="content">
                 <div className="header">
                     {make} {model} ({year})
