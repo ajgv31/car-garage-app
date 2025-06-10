@@ -1,6 +1,4 @@
 import React from "react";
-import CarList from './CarList';
-import CarCard from "./CarCard";
 
 class AddCar extends React.Component {
   state = {
@@ -19,29 +17,30 @@ class AddCar extends React.Component {
   }
 
   handleSubmit = (e) => {
-    e.preventDefault();
-    const { make, model, plateNumber } = this.state;
+  e.preventDefault();
+  const { make, model, plateNumber } = this.state;
 
-    if (!make || !model || !plateNumber) {
-      alert("Make, Model, and Plate Number are mandatory!");
-      return;
-    }
+  if (!make || !model || !plateNumber) {
+    alert("Make, Model, and Plate Number are mandatory!");
+    return;
+  }
 
-    if (this.props.currentCar) {
-      this.props.editCarHandler(this.state);
-    } else {
-      this.props.addCarHandler(this.state);
-    }
+  if (this.props.currentCar) {
+    this.props.editCar(this.state); 
+    this.props.setCurrentCar(null);
+  } else {
+    this.props.addCar(this.state);
+  }
 
-    this.setState({
-      make: "",
-      model: "",
-      colour: "",
-      year: "",
-      plateNumber: "",
-      fault: ""
-    });
-  };
+  this.setState({
+    make: "",
+    model: "",
+    colour: "",
+    year: "",
+    plateNumber: "",
+    fault: ""
+  });
+};
 
   render() {
     return (

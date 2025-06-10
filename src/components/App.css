@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.mechanic-card {
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.ui.avatar.image {
+  border-radius: 50%;
+  margin-right: 15px;
+}
