@@ -54,25 +54,30 @@ function App()
   }, [mechanics]);
 
   return (
-    <div className='ui container'>
+    <div className="container-fluid"> {/* Use container-fluid for full width or container for fixed width */}
       <Header />
-      <div className="ui two column grid">
-        <div className="column">
-          <AddCar 
+      <div className="row mt-4"> {/* Bootstrap row for the main layout, with some top margin */}
+        {/*  Column for AddCar */}
+        <div className="col-md-4"> {/* Takes 4 out of 12 columns on medium and larger screens */}
+          <AddCar
             addCarHandler={addCarHandler}
             editCarHandler={editCarHandler}
             currentCar={currentCar}
             setCurrentCar={setCurrentCar}
           />
-          <CarList 
-            cars={cars} 
+        </div>
+        {/*  Column for CarList */}
+        <div className="col-md-8"> {/* Takes 8 out of 12 columns on medium and larger screens */}
+          <CarList
+            cars={cars}
             deleteCarHandler={deleteCarHandler}
             setCurrentCar={setCurrentCar}
           />
         </div>
 
-        {/*Mechanic Options
-        <div className="column">
+
+        {/* Uncomment and adjust if you want to include Mechanic options later
+        <div className="col-md-6"> // Example for placing them side-by-side if you wanted another pair
           <AddMechanic
             addMechanicHandler={addMechanicHandler}
             editMechanicHandler={editMechanicHandler}
