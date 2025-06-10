@@ -7,31 +7,28 @@ const CarList = ({ cars, deleteCarHandler, setCurrentCar }) => {
     setCurrentCar(carToEdit);
   };
 
-  const renderCarList = cars.map((car) => (
-    <div key={car.id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-      <div className="card h-100">
-        <div className="card-body">
-          <CarCard
-            car={car}
-            deleteCarHandler={deleteCarHandler}
-            editHandler={editHandler}
-          />
-        </div>
-      </div>
-    </div>
-  ));
-
   return (
-    <div className="container mt-4">
-      <div className="row">
-        {renderCarList}
-      </div>
-      {cars.length === 0 && (
-        <div className="text-center mt-5">
-          <h3>No Cars Available</h3>
-          <p>Add some cars to display them here.</p>
+    <div className="container-fluid mt-4">
+      <div className="card">
+        <div className="card-body d-flex flex-row flex-nowrap overflow-auto" style={{ gap: '20px' }}>
+          {cars.length > 0 ? (
+            cars.map((car) => (
+              <div key={car.id} style={{ minWidth: '300px', flexShrink: 0 }}>
+                <CarCard
+                  car={car}
+                  deleteCarHandler={deleteCarHandler}
+                  editHandler={editHandler}
+                />
+              </div>
+            ))
+          ) : (
+            <div className="text-center w-100 py-5">
+              <h3>No Cars Available</h3>
+              <p>Add some cars to display them here.</p>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

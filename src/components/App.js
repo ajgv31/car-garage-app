@@ -8,26 +8,27 @@ import MechanicList from './MechanicList';
 function App() {
   // State with useState hook
   const [cars, setCars] = useState(() => {
-    const savedCars = localStorage.getItem('cars');
-    return savedCars ? JSON.parse(savedCars) : [];
-  });
+  const savedCars = localStorage.getItem('cars');
+  return savedCars ? JSON.parse(savedCars) : [];
+});
+
   
   const [mechanics, setMechanics] = useState(() => {
-    const savedMechanics = localStorage.getItem('mechanics');
-    return savedMechanics ? JSON.parse(savedMechanics) : [];
-  });
+  const savedMechanics = localStorage.getItem('mechanics');
+  return savedMechanics ? JSON.parse(savedMechanics) : [];
+});
   
   const [currentCar, setCurrentCar] = useState(null);
   const [currentMechanic, setCurrentMechanic] = useState(null);
 
-  // useEffect hook for side effects
+  // useEffect hook for side effects and local storage
   useEffect(() => {
-    localStorage.setItem('cars', JSON.stringify(cars));
-  }, [cars]);
+  localStorage.setItem('cars', JSON.stringify(cars));
+}, [cars]);
 
   useEffect(() => {
-    localStorage.setItem('mechanics', JSON.stringify(mechanics));
-  }, [mechanics]);
+  localStorage.setItem('mechanics', JSON.stringify(mechanics));
+}, [mechanics]);
 
   // Car CRUD functions
   const addCar = (car) => {
