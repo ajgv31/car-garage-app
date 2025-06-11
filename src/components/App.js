@@ -76,7 +76,7 @@ function App() {
           />
           <CarList
             cars={cars}
-            deleteCar={deleteCar}
+            deleteCarHandler={deleteCar}
             setCurrentCar={setCurrentCar}
           />
         </div>
@@ -91,7 +91,7 @@ function App() {
           />
           <MechanicList
             mechanics={mechanics}
-            deleteMechanic={deleteMechanic}
+            deleteMechanicHandler={deleteMechanic}
             setCurrentMechanic={setCurrentMechanic}
           />
         </div>
